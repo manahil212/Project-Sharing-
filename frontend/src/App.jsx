@@ -4,7 +4,7 @@ import Navbar from './Navbar';
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
-import ProjectSubmission from './Pages/projectSubmission';
+import ProjectSubmission from './Pages/ProjectSubmission';
 import './App.css'
 
 function App(){

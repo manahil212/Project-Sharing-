@@ -15,7 +15,7 @@ function Navbar() {
           <Link style={{color:"black"}} to="/">Home</Link>
         <Link style={{color:"black"}} to="/Login">Login</Link> 
         <Link style={{color:"black"}} to="/Signup">Signup</Link>
-        <Link  style={{color:"black"}} to="/projectSubmission"> 
+        <Link  style={{color:"black"}} to="/ProjectSubmission"> 
         Project submission
         </Link>
       </nav>

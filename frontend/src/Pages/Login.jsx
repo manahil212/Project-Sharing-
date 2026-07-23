@@ -1,3 +1,4 @@
+import axios from "axios"
 import { Button, Form,Container, Row } from "react-bootstrap";
 import {Link} from "react-router-dom"
 import { useState } from "react";
@@ -6,19 +7,16 @@ import { useState } from "react";
 // yaha login form hai
 
 function Login() {
-  const handleSubmit = (e) => {
-    e.preventDefault()//yeh page ko refresh honai sai rokaiga
-    console.log("form submit hogaya")
-    alert("login successfull")
-
-  }
-
-
-// onChange
+  //state yaha declare hogi
   const[formData, setFormData] = useState({
     email:"",
     password:""
   })
+
+
+
+  // / onChange
+  //handlechange yaha hoga
   const handleChange=(e) => {
     setFormData({
      ...formData,
@@ -27,6 +25,34 @@ function Login() {
 
     console.log(formData)
   }
+
+  // handlesubmit yaha banaiga
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const response = await axios.post(
+      "http://localhost:5000/api/auth/login",
+      {
+        email: formData.email,
+        password: formData.password,
+      }
+    );
+
+    console.log("Login Success:", response.data);
+
+    // Token save karna ho to
+    // localStorage.setItem("token", response.data.token);
+
+    alert("Login Successful!");
+  } catch (error) {
+    console.error("Login Error:", error.response?.data || error.message);
+    alert(error.response?.data?.message || "Invalid Credentials");
+  }
+};
+
+
+
   return (
   <div style={{backgroundColor:"#fff3e0" ,minHeight:"100vh"}}>
     <Container className="mt-5" >

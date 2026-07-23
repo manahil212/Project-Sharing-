@@ -1,18 +1,27 @@
-
+import axios from "axios"
 import { useState } from "react";
 import { Button, Form, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 // yaha signup form hai
 function Signup() { 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
            e.preventDefault()
-            console.log("form submit hogaya")
-            alert("Signup successfull")
+           try{
+            //backend api ko data bhej rahai hai
+            const response = await axios.post("http://localhost:5000/api/auth/signup", formData);
+           
+            console.log(" Server Response" , response.data)
+            alert("Signup succsessfull! data mongodb mai save hogaya")}
+           
+            catch(error){
+              console.error("Error details:" ,error.response?.data || error.message)
+              alert(error.response?.data?.message ||"Signup failed")
+            }
           }
 
 
       const [formData, setFormData]     = useState({
-         name :"",
+         fullName :"",
          email:"",
          password:"",
      
@@ -34,7 +43,7 @@ function Signup() {
     <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label style={{fontFamily:"Arial-sans-serif", fontSize:"20px", fontWeight:"bold" ,textAlign:"left" , display:"block"}}>Full Name:</Form.Label>
-        <Form.Control type="Name" placeholder="Name" name="name" onChange={handleChange} />
+        <Form.Control type="Name" placeholder="Name" name="fullName" onChange={handleChange} />
       </Form.Group>
 
 
@@ -67,3 +76,5 @@ function Signup() {
 }
 
 export default Signup;
+
+

@@ -1,8 +1,8 @@
-
+import axios from "axios"
 import { Button, Form, Container } from "react-bootstrap";
 import  {useState} from "react"
 
-function projectSubmission() { 
+function ProjectSubmission() { 
 const [formData , setFormData] = useState(
     {title:"",
     description:"",
@@ -13,15 +13,28 @@ const [formData , setFormData] = useState(
    setFormData({
     ...formData,
     [e.target.name] :e.target.value
-   })
-    }
+    })
+  }
 
-const handleSubmit =(e) =>{
-e.preventDefault()
-console.log("Submit hogaya",formData);
+    
+  
+const handleSubmit =async (e) =>{
+e.preventDefault();
+
+try{
+            //backend api ko data bhej rahai hai
+            const response = await axios.post("http://localhost:5000/api/projects/submit", formData);
+           //jb tk server ka response ni ayega code agay 
+            console.log(" Server Response" , response.data)
+            alert("Project submitted succesfully");
+            //form clear kernai kain liye
+            setFormData({title: "", description: "", url: ""})
+
+}catch(error){
+              console.error("Error details:" ,error.response?.data || error.message)
+              alert(error.response?.data?.message ||"Project submission failed")
+            }
 }
-
-
   return (
   <div style={{backgroundColor:"#fff3e0" ,minHeight:"100vh"}}>
     <Container className="mt-5">
@@ -53,4 +66,4 @@ console.log("Submit hogaya",formData);
   );
 }
 
-export default projectSubmission;
+export default ProjectSubmission

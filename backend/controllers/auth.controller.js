@@ -5,6 +5,8 @@
 // ki coding hogi.
 import bcrypt from "bcryptjs"
 import User from "../models/user.model.js";
+import jwt from "jsonwebtoken";
+
 
 // Signup
 
@@ -42,6 +44,7 @@ export const signup = async (req, res) => {
 };
 
 // Login
+
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -60,9 +63,17 @@ if(!isPasswordCorrect) {
   return res.status(401).json({message:"invalid password"})
 }
  
+// token generate kertai hai
+const token = jwt.sign(
+  {id : user._id},
+  "YOUR_SECRET-KEY",//yaha apna secret key likai(jo env variable mai hota hai)
+  {expiresIn : "1d"} //token ki expiry timing()
+)
+
 // agar yahab tk code agya is ka mtlb password sahi hai
     res.status(200).json({
       message: "Login successful",
+      token, //
       user:{email : user.email,
         password : user.password
       }
